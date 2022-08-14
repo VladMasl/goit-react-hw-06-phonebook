@@ -1,64 +1,29 @@
-import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import s from '../components/App.module.css';
 
 function App() {
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts')) ?? []
-  );
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-  const deleteContacts = id => {
-    return setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== id)
-    );
-  };
-
-  const formSubmitHandler = ({ name, number }) => {
-    const todo = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    repeatControlsContact(todo)
-      ? alert(`${todo.name} is already in contacts!!!`)
-      : setContacts(prevContacts => [...prevContacts, todo]);
-  };
-
-  const changeFilter = e => {
-    setFilter(e.target.value);
-  };
-
-  const getVisibleFilterList = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  const repeatControlsContact = element => {
-    return contacts.find(
-      contact => contact.name.toLowerCase() === element.name.toLowerCase()
-    );
-  };
+  const contacts = useSelector(state => state.contacts.item);
 
   return (
     <div className={s.decor}>
-      <h1>Phonebook</h1>
-      <ContactForm onSubmit={formSubmitHandler} />
-      <h2>Contacts</h2>
-      <Filter filter={filter} changeFilter={changeFilter} />
-      <ContactList
-        contact={getVisibleFilterList()}
-        onDeleteContact={deleteContacts}
-      />
+      <h1>Phonebook📱</h1>
+      <ContactForm />
+      {contacts.length === 0 ? (
+        <h2>
+          You have no records☝
+          <br />
+          Enter the number and name☝
+        </h2>
+      ) : (
+        <>
+          <h2>Contacts</h2>
+          <Filter />
+          <ContactList />
+        </>
+      )}
     </div>
   );
 }

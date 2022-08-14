@@ -22,6 +22,12 @@
     margin-bottom: 8px;
 }
 
+.span{
+    font-size: 20px;
+    min-width: 130px;
+    color: brown;
+}
+
 .btn{
 
     width: 100px;

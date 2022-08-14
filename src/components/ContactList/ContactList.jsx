@@ -1,18 +1,31 @@
-import s from './ContactList.module.css';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import action from '../../redux/contacts/contactsActions';
+//import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
+import s from './ContactList.module.css';
 
-const ContactList = ({ contact, onDeleteContact }) => {
+const ContactList = () => {
+  const filter = useSelector(state => state.contacts.filter);
+  const contacts = useSelector(state => state.contacts.item);
+  const dispatch = useDispatch();
+
+  const getVisibleFilterList = () => {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
   return (
     <ul className={s.list}>
-      {contact.map(({ name, number, id }) => (
+      {getVisibleFilterList().map(({ name, number, id }) => (
         <li key={nanoid()} className={s.item}>
           <span className={s.span}>{name}:</span>
           <span>{number}</span>
           <button
             className={s.btn}
             type="button"
-            onClick={() => onDeleteContact(id)}
+            onClick={() => dispatch(action.deleteContacts(id))}
           >
             Delete
           </button>
@@ -22,15 +35,15 @@ const ContactList = ({ contact, onDeleteContact }) => {
   );
 };
 
-ContactList.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  onDeleteContact: PropTypes.func.isRequired,
-};
+// ContactList.propTypes = {
+//   options: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     })
+//   ),
+//   onDeleteContact: PropTypes.func.isRequired,
+// };
 
 export default ContactList;
