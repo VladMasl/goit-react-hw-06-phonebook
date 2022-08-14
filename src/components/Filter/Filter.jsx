@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import action from '../../redux/contacts/contactsActions';
 import s from './Filter.module.css';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Filter = () => {
   const filter = useSelector(state => state.contacts.filter);
@@ -20,9 +20,9 @@ const Filter = () => {
   );
 };
 
-// Filter.propTypes = {
-//   filter: PropTypes.string.isRequired,
-//   changeFilter: PropTypes.func.isRequired,
-// };
+Filter.propTypes = {
+  filter: PropTypes.string,
+  changeFilter: PropTypes.func,
+};
 
 export default Filter;

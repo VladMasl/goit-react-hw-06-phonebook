@@ -1,4 +1,4 @@
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import actions from '../../redux/contacts/contactsActions';
 import { useState } from 'react';
@@ -74,7 +74,7 @@ function ContactForm() {
   );
 }
 
-// ContactForm.propTypes = {
-//   onSubmit: PropTypes.func,
-// };
+ContactForm.propTypes = {
+   onSubmit: PropTypes.func,
+ };
 export default ContactForm;

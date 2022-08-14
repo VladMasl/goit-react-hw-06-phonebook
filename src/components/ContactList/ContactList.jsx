@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import action from '../../redux/contacts/contactsActions';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import s from './ContactList.module.css';
 
@@ -35,15 +35,15 @@ const ContactList = () => {
   );
 };
 
-// ContactList.propTypes = {
-//   options: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ),
-//   onDeleteContact: PropTypes.func.isRequired,
-// };
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ),
+  onDeleteContact: PropTypes.func,
+};
 
 export default ContactList;
